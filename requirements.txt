@@ -1,0 +1,8 @@
+pm4py
+pandas
+numpy
+scikit-learn
+scipy
+matplotlib
+tqdm
+pyarrow
