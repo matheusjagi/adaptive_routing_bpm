@@ -43,7 +43,6 @@ run_final_analysis.py         Stage 1: tune -> freeze -> test, with paired stati
 run_synthetic_experiment.py   Stage 2: drift-pattern table + phase-diagram sweep
 run_policies.py               quick single-run comparison of the policies
 exploration/                  analysis probes and figure scripts
-documentation.md              extended technical notes (in Portuguese)
 ```
 
 ## Setup
