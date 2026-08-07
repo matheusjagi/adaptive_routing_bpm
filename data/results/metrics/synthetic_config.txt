@@ -1,0 +1,7 @@
+W=250
+m=0.0
+ann_rate=6.0
+amp=100.0
+horizon_d=365.0
+warmup_d=60.0
+test_seeds=30

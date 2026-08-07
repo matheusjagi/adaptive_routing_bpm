@@ -1,0 +1,4 @@
+comparação,regret_médio_rival_h,regret_médio_dv_h,wilcoxon_p (rival pior),t_pareado_p (rival pior),mcnemar_p,dv_acerta_rival_erra,rival_acerta_dv_erra
+Estática (BPMN fixo) vs DV,2.0917157128736603,6.1269427276406265,1.0,1.0,9.942794292262892e-201,2527,5150
+"Centralizada (retreino 30d, janela 60d) vs DV",12.922970400947321,6.1269427276406265,0.0,0.0,3.126688829767366e-274,2260,481
+Log real (decisões observadas) vs DV,15.98038446914474,6.1269427276406265,0.0,0.0,1.451987909694054e-45,4863,3564
