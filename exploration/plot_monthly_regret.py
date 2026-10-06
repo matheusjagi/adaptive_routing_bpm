@@ -1,8 +1,8 @@
 """Gera o gráfico de regret mensal (teste, jul-dez/2016) para o artigo.
 Saída: PDFs vetoriais (EN e PT) na pasta figures/ do artigo.
 
-Codificação secundária (estilo de linha + marcador) além da cor, para leitura segura
-em escala de cinza na impressão. Paleta validada (validate_palette.js): 2166AC/E08214/008B7D.
+Camera-ready: legenda "Centralized" -> "Periodic recomp." e eixo y como regret ESTIMADO
+(R1.1/R1.2). Dados e estilo inalterados.
 """
 
 import os
@@ -14,11 +14,11 @@ import matplotlib.pyplot as plt
 
 _PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CSV_PATH = os.path.join(_PROJECT_ROOT, "data", "results", "metrics", "final_monthly_regret.csv")
-FIG_DIR = "/home/matheusjagi/Documents/Mestrado/dissertação/artigo_adaptive_routing/figures"
+FIG_DIR = os.environ.get("FIG_DIR", "/home/matheusjagi/Documents/Mestrado/dissertação/artigo_adaptive_routing/figures")
 
 BLUE = "#2166AC"   # cost-tracking (protagonista)
 TEAL = "#008B7D"   # estática
-ORANGE = "#E08214"  # centralizada
+ORANGE = "#E08214"  # recomputação periódica
 INK = "#333333"
 GRID = "#D8D8D8"
 
@@ -54,7 +54,6 @@ def make_plot(labels, out_path):
     fig, ax = plt.subplots(figsize=(6.6, 3.1))
 
     YMAX = 15.5
-    # centralizada: clipar em YMAX (o pico de out fica fora da escala, anotado)
     central_clip = [min(v, YMAX) for v in central]
 
     ax.plot(x, central_clip, color=ORANGE, linestyle=":", marker="^", markersize=6.5,
@@ -64,8 +63,7 @@ def make_plot(labels, out_path):
     ax.plot(x, cost, color=BLUE, linestyle="-", marker="o", markersize=6.5,
             linewidth=2.3, label=labels["cost"], zorder=4)
 
-    # anotação do pico fora da escala (centralizada, outubro = 53.3h)
-    ax.annotate(f"{labels['central_short']}: 53.3 h",
+    ax.annotate(f"{labels['central_short']}: {labels['peak']}",
                 xy=(3, YMAX), xytext=(3.05, YMAX - 2.1),
                 fontsize=8.2, color=INK, ha="left", va="top",
                 arrowprops=dict(arrowstyle="-|>", color=ORANGE, lw=1.2))
@@ -94,16 +92,16 @@ def make_plot(labels, out_path):
 def main():
     make_plot(
         labels={
-            "static": "Static", "central": "Centralized", "cost": "Cost-tracking",
-            "central_short": "Centralized", "ylabel": "Mean regret (h)",
+            "static": "Static", "central": "Periodic recomp.", "cost": "Cost-tracking",
+            "central_short": "Periodic", "peak": "53.3 h", "ylabel": "Mean estimated regret (h)",
             "months": MONTHS,
         },
         out_path=os.path.join(FIG_DIR, "monthly_regret.pdf"),
     )
     make_plot(
         labels={
-            "static": "Estática", "central": "Centralizada", "cost": "Rastreamento de custo",
-            "central_short": "Centralizada", "ylabel": "Regret médio (h)",
+            "static": "Estática", "central": "Recomp. periódica", "cost": "Rastreamento de custo",
+            "central_short": "Periódica", "peak": "53,3 h", "ylabel": "Regret estimado médio (h)",
             "months": ["Jul", "Ago", "Set", "Out", "Nov", "Dez"],
         },
         out_path=os.path.join(FIG_DIR, "monthly_regret_pt.pdf"),
